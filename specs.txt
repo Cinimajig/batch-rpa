@@ -99,6 +99,16 @@ WINDOW
         // SHOW, HIDE, MAXIMIZED or MINIMIZED.
         <STATE> 
 
+    // Finds a window and returns a HWND (Window handle).
+    FIND TODO!
+
+        // Window title/text to find. <TITEL> is a String.
+        -TITEL <TITEL> 
+
+        // Window class to find. <CLASS> is a String.
+        -CLASS <CLASS> 
+
+
 // Prompt based commands. These can display messages to the user and recieving 
 // input.
 PROMPT 
@@ -166,7 +176,7 @@ APP
         <...EXE_ARGS>
     
     // Stops an application.
-    TERMINATE
+    STOP
         // Force exists the application.
         -FORCE
 
