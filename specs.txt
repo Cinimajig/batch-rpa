@@ -1,0 +1,180 @@
+//-----------------------------------------------------------------------------
+// Command template for .crpa files. 
+//-----------------------------------------------------------------------------
+// These files must be valid UTF-8 (no BOM). If not, then undefined behavior 
+// or crashed might happen.
+// 
+// It follows this template below:
+// CMD <SUB_CMD> -OPTIONS <OPTION_VALUE> <PARAMETER> <...REST>
+//
+// Explained:
+// If something has a questionmark after it (?) it means it's optional. 
+//
+// CMD              The crpa command to run. These will mostly be for grouping 
+//                  related commands together.
+// 
+// SUB_CMD          The subcommand to CMD. These might not always exist, in 
+//                  wich case CMD is the "subcommand".
+// 
+// -OPTIONS         There can be multiple options for a command or none at all.
+//                  These will always for tweaking purpeses. They can take a 
+//                  value in the form of OPTION_VALUE. These must be used 
+//                  before positional arguments.
+// 
+// OPTION_VALUE     The value given after an OPTIONS is the value it should
+//                  have. If none given it will be set to the default value 
+//                  described.
+// 
+// PARAMETER        A positional argument to the command/subcommand.
+// 
+// ...REST          Positional arguments after everything else. These are 
+//                  always optional and is mostly for other things, you might 
+//                  want arguments to be sent to 
+//                  (external programs, webservices ect.).
+// 
+// Variables are handled a little bit different. If the line starts with a $
+// followed by a name, it means you retrieve the value of that variable. If 
+// you want to set a variable to the result of a command, you can do it like 
+// this:
+// 
+// $EXIT_CODE = APP RUN -BATCH ECHO Grilled horse!
+// 
+// You can also set it to stuff like, Strings, numbers, booleans and None. 
+// Strings must be in qoutes ("").
+// 
+// $QUESTION = "How much time have i wasted? (years)"
+// $ANSWER = 24
+// $IS_ANSWER_TRUE = TRUE
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+// Variable types.
+//-----------------------------------------------------------------------------
+String  "Hello" Normal String type. Defined by putting text in double qoutes.
+                Strings must be UTF-8 valid (NO BOM).
+Char    'a'     A character. A charcter is defined by using single qoutes.
+Bool    TRUE    A Boolean type. This is either TRUE or FALSE.
+Number  42      Numbers of any kind. Floating-point numbers are not yet 
+                supported.
+List    [1, 2]  A Dynamic sized list, that can grow or shrink. 
+                (NOT YET SUPPORTED)
+Object  {A: 1}  Objects are key-value pairs. (NOT YET SUPPORTED)
+
+//-----------------------------------------------------------------------------
+// Predefined variables and their type:
+//-----------------------------------------------------------------------------
+$CWD            String      Current working directory.
+$USERNAME       String      Username of the current user.
+$HOSTNAME       String      Name of the current computer.
+$DOMAIN         String      The domain of the current domain / user.
+$TEMP           String      Path to the TEMP folder.
+$SCRIPT_ROOT    String      The folder in which the script is. Useful for relative 
+                            paths.
+
+//-----------------------------------------------------------------------------
+// Commands.
+//-----------------------------------------------------------------------------
+
+// Variable management.
+VAR 
+    // Returns the type of the variable.
+    TYPE 
+        // Name of the variable (without $).
+        <NAME>
+
+// Commands for handling windows.
+WINDOW 
+    // Sets the window state.
+    STATE 
+        // Window title to find. <TITEL> is a String.
+        -TITEL <TITEL> 
+
+        // Window class to find. <CLASS> is a String.
+        -CLASS <CLASS> 
+
+        // A handle to the given window. <HANDLE> is a HWND (Window handle).
+        -HANDLE <HANDLE> 
+
+        // The window state to set. Can be 1 of the following values: 
+        // SHOW, HIDE, MAXIMIZED or MINIMIZED.
+        <STATE> 
+
+// Prompt based commands. These can display messages to the user and recieving 
+// input.
+PROMPT 
+    // Displays a message. Returns a String based on the button pressed in 
+    // english.
+    SHOW 
+        // Icon that should be displayed. These are built-ins in Windows. 
+        // <ICON> can be one of the following values: INFO, WARNING, QUESTION or 
+        // ERROR.
+        -ICON <ICON> 
+
+        // What buttons to be displayed. <BUTTONS> that can be one of the 
+        // following values: OK, OK_CANCEL, RETRY_CANCEL, YES_NO or YES_NO_CANCEL.
+        // Default is: OK.
+        -BUTTONS <BUTTONS> 
+
+        // The default button to be selected. ONLY USE WITH THE -BUTTONS 
+        // OPTION. <NUMBER> is a Number and can be bewteen 0-3. Default is: 0.
+        -DEFAULT_BUTTON <NUMBER>
+
+        // Title of the prompt. <TITLE> should be a String.
+        -TITLE <TITLE> 
+
+        // If the prompt should always be, the top most window.
+        -TOP_MOST 
+
+        // The message to be displayed. <MSG> is a String.
+        <MSG> 
+    
+    // Input based prompt. returns the input as a String.
+    INPUT 
+        // Title of the inputbox. <TITLE> is a String.
+        -TITLE <TITLE> 
+
+        // Sets the prompt type. <TYPE> can be on of the following values:
+        // SECRET, FILE_SELECT, TEXT. Default is: TEXT.
+        -PROMPT_TYPE <TYPE> 
+
+        // The default value in the input field. <VALUE> is a String.
+        -DEFAULT_VALUE <VALUE> 
+
+        // The message to display above the input field.
+        <MSG> 
+
+// Commands related to applications/programs on Windows.
+APP
+    // Starts a application. Returns TRUE or FALSE, based on, if it was a 
+    // success.
+    RUN 
+        // Wait for the app to close, before continuing.
+        -WAIT 
+
+        // Run it through cmd.exe. This allows cmd-commands to be run. 
+        // CAN'T BE USED WITH -PWSH!
+        -BATCH 
+
+        // Run it through powershell.exe. Thos allows for PowerShell cmdlets to be 
+        // run. CAN'T BE USED WITH -BATCH!
+        -PWSH 
+
+        // The path to the program, that should be run.
+        <EXE_PATH> 
+
+        // These arguments will be passed to the program, you want to run.
+        <...EXE_ARGS>
+    
+    // Stops an application.
+    TERMINATE
+        // Force exists the application.
+        -FORCE
+
+        // the name of the program to close.
+        <NAME>
+
+// Stops the program with a success exit code.
+EXIT 
+    // Stops the program with an error. <MSG> is optional and is a string.
+    -ERROR <MSG?> 
+
