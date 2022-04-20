@@ -21,13 +21,13 @@ SUB_CMD         The subcommand to CMD. These might not always exist, in which
                     value in the form of OPTION_VALUE. These must be used 
                     before positional arguments.
    
-    OPTION_VALUE    The value given after an OPTIONS is the value it should 
+OPTION_VALUE        The value given after an OPTIONS is the value it should 
                     have. If none given it will be set to the default value 
                     described.
    
-    PARAMETER       A positional argument to the command/subcommand.
+PARAMETER           A positional argument to the command/subcommand.
    
-    ...REST         Positional arguments after everything else. These are 
+...REST             Positional arguments after everything else. These are 
                     always optional and is mostly for other things, you might 
                     want arguments to be sent to 
                     (external programs, webservices ect.).
