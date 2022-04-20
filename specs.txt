@@ -1,50 +1,52 @@
 //-----------------------------------------------------------------------------
 // Command template for .crpa files. 
 //-----------------------------------------------------------------------------
-// These files must be valid UTF-8 (no BOM). If not, then undefined behavior 
-// or crashed might happen.
-// 
-// It follows this template below:
-// CMD <SUB_CMD> -OPTIONS <OPTION_VALUE> <PARAMETER> <...REST>
-//
-// Explained:
-// If something has a questionmark after it (?) it means it's optional. 
-//
-// CMD              The crpa command to run. These will mostly be for grouping 
-//                  related commands together.
-// 
-// SUB_CMD          The subcommand to CMD. These might not always exist, in 
-//                  wich case CMD is the "subcommand".
-// 
-// -OPTIONS         There can be multiple options for a command or none at all.
-//                  These will always for tweaking purpeses. They can take a 
-//                  value in the form of OPTION_VALUE. These must be used 
-//                  before positional arguments.
-// 
-// OPTION_VALUE     The value given after an OPTIONS is the value it should
-//                  have. If none given it will be set to the default value 
-//                  described.
-// 
-// PARAMETER        A positional argument to the command/subcommand.
-// 
-// ...REST          Positional arguments after everything else. These are 
-//                  always optional and is mostly for other things, you might 
-//                  want arguments to be sent to 
-//                  (external programs, webservices ect.).
-// 
-// Variables are handled a little bit different. If the line starts with a $
-// followed by a name, it means you retrieve the value of that variable. If 
-// you want to set a variable to the result of a command, you can do it like 
-// this:
-// 
-// $EXIT_CODE = APP RUN -BATCH ECHO Grilled horse!
-// 
-// You can also set it to stuff like, Strings, numbers, booleans and None. 
-// Strings must be in qoutes ("").
-// 
-// $QUESTION = "How much time have i wasted? (years)"
-// $ANSWER = 24
-// $IS_ANSWER_TRUE = TRUE
+These files must be valid UTF-8 (no BOM). If not, then undefined behavior or 
+crashed might happen.
+ 
+It follows this template below:
+CMD <SUB_CMD> -OPTIONS <OPTION_VALUE> <PARAMETER> <...REST>
+
+Explained:
+If something has a questionmark after it (?) it means it's optional. 
+
+CMD             The crpa command to run. These will mostly be for grouping 
+                related commands together.
+
+SUB_CMD         The subcommand to CMD. These might not always exist, in which 
+                case CMD is the "subcommand".
+
+-OPTIONS            There can be multiple options for a command or none at all.
+                    These will always for tweaking purpeses. They can take a 
+                    value in the form of OPTION_VALUE. These must be used 
+                    before positional arguments.
+   
+    OPTION_VALUE    The value given after an OPTIONS is the value it should 
+                    have. If none given it will be set to the default value 
+                    described.
+   
+    PARAMETER       A positional argument to the command/subcommand.
+   
+    ...REST         Positional arguments after everything else. These are 
+                    always optional and is mostly for other things, you might 
+                    want arguments to be sent to 
+                    (external programs, webservices ect.).
+   
+Variables are handled a little bit different. If the line starts with a $ 
+followed by a name, it means you retrieve the value of that variable. If 
+you want to set a variable to the result of a command, you can do it like 
+this:
+   
+$exit_code = APP RUN -BATCH ECHO Grilled horse!
+   
+You can also set it to stuff like, Strings, numbers, booleans and None. 
+Strings must be in qoutes ("").
+
+// This line is a comment.
+$question = "How much time have i wasted? (years)"
+$answer = 24
+$is_answer_true = true
+$error_var = true // This line will be an error (FIX IT LATER).
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
@@ -53,7 +55,7 @@
 String  "Hello" Normal String type. Defined by putting text in double qoutes.
                 Strings must be UTF-8 valid (NO BOM).
 Char    'a'     A character. A charcter is defined by using single qoutes.
-Bool    TRUE    A Boolean type. This is either TRUE or FALSE.
+Bool    true    A Boolean type. This is either true or false.
 Number  42      Numbers of any kind. Floating-point numbers are not yet 
                 supported.
 List    [1, 2]  A Dynamic sized list, that can grow or shrink. 
@@ -63,13 +65,13 @@ Object  {A: 1}  Objects are key-value pairs. (NOT YET SUPPORTED)
 //-----------------------------------------------------------------------------
 // Predefined variables and their type:
 //-----------------------------------------------------------------------------
-$CWD            String      Current working directory.
-$USERNAME       String      Username of the current user.
-$HOSTNAME       String      Name of the current computer.
-$DOMAIN         String      The domain of the current domain / user.
-$TEMP           String      Path to the TEMP folder.
-$SCRIPT_ROOT    String      The folder in which the script is. Useful for relative 
-                            paths.
+$cwd            String      Current working directory.
+$username       String      Username of the current user.
+$hostname       String      Name of the current computer.
+$domain         String      The domain of the current domain / user.
+$temp           String      Path to the TEMP folder.
+$script_root    String      The folder in which the script is. Useful for 
+                            relative paths.
 
 //-----------------------------------------------------------------------------
 // Commands.
@@ -81,6 +83,23 @@ VAR
     TYPE 
         // Name of the variable (without $).
         <NAME>
+    
+// Environment variables.
+ENV 
+    // Retrieves a environment variable. Returns a String.
+    GET 
+
+        // The name of the environment variable. This is a string.
+        <NAME> 
+
+    // Sets and environment variable.
+    SET 
+
+        // The name of the environment variable. This is a string.
+        <NAME> 
+
+        // The value the set. <VALUE> is a String.
+        <VALUE> 
 
 // Commands for handling windows.
 WINDOW 
@@ -99,15 +118,14 @@ WINDOW
         // SHOW, HIDE, MAXIMIZED or MINIMIZED.
         <STATE> 
 
-    // Finds a window and returns a HWND (Window handle).
-    FIND TODO!
+    // Finds a window and returns a HWND (Window handle). (UNFINISHED)
+    FIND 
 
         // Window title/text to find. <TITEL> is a String.
         -TITEL <TITEL> 
 
         // Window class to find. <CLASS> is a String.
         -CLASS <CLASS> 
-
 
 // Prompt based commands. These can display messages to the user and recieving 
 // input.
@@ -155,7 +173,7 @@ PROMPT
 
 // Commands related to applications/programs on Windows.
 APP
-    // Starts a application. Returns TRUE or FALSE, based on, if it was a 
+    // Starts a application. Returns true or false, based on, if it was a 
     // success.
     RUN 
         // Wait for the app to close, before continuing.
@@ -180,7 +198,7 @@ APP
         // Force exists the application.
         -FORCE
 
-        // the name of the program to close.
+        // the name of the program to close. This is a String.
         <NAME>
 
 // Stops the program with a success exit code.
