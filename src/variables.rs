@@ -1,7 +1,5 @@
 use std::{env, collections::HashMap, path::{PathBuf, Path}};
-
 use windows::{core::PWSTR, Win32::System::Environment::GetCurrentDirectoryW};
-
 use crate::types::Type;
 
 #[derive(Debug)]
