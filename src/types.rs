@@ -8,7 +8,7 @@ pub enum Type {
     Number(f64),
     Bool(bool),
     List(Vec<Type>),
-    Object(HashMap<String, Type>),
+    // Object(HashMap<String, Type>),
 }
 
 // #[derive(Debug)]
