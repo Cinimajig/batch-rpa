@@ -134,6 +134,21 @@ WINDOW
         // Window class to find. <CLASS> is a String.
         -CLASS <CLASS> 
 
+// Displays text or variables to the screen.
+CONSOLE 
+    // Displays a readable text to the screen. These will dereference the 
+    // variables and just isplay their values.
+    PRINT 
+        // Message to display. This can be a String or a Variable.
+        <MSG> 
+
+    // Displays debug info to the screen. This is to help with values in 
+    // Variables.
+    DEBUG 
+        // The variable to display. It will be in the format of: 
+        // Name: Type = Value
+        <VAR>
+
 // Prompt based commands. These can display messages to the user and recieving 
 // input.
 PROMPT 
