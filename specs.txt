@@ -62,6 +62,13 @@ List    [1, 2]  A Dynamic sized list, that can grow or shrink.
                 (NOT YET SUPPORTED)
 Object  {A: 1}  Objects are key-value pairs. (NOT YET SUPPORTED)
 
+Other variable types exist, but they can only be optained through 
+Commands:
+
+HWND            Window Handle on Win32. These are also used by elements, like 
+                buttons, textfields, tabs asf. batch-rpa, transforms it a little, 
+                to be more like an object, instead of af raw handle. (FUTURE)
+
 //-----------------------------------------------------------------------------
 // Predefined variables and their type:
 //-----------------------------------------------------------------------------
