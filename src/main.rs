@@ -3,6 +3,7 @@ mod command;
 mod types;
 mod variables;
 
+mod commands;
 
 use parser::*;
 use command::*;
