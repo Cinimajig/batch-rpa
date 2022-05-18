@@ -147,6 +147,7 @@ CONSOLE
     DEBUG 
         // The variable to display. It will be in the format of: 
         // Name: Type = Value
+        // Name = Type(Value)
         <VAR>
 
 // Prompt based commands. These can display messages to the user and recieving 
